@@ -1,14 +1,18 @@
 import { useReducer } from "react";
-import { MortgageData } from "../Models";
-import formReducer, { InputType } from "../reducers";
+import { MortgageData } from "../Models/mortgage";
+import formReducer, { InputType } from "../reducers/formReducers";
 
+interface MortgageFormProps {
+    submitMortgage: (mortgageData: MortgageData) => void;
+}
 
-export const Mortgage = () => {
+export const MortgageForm = (props: MortgageFormProps) => {
     const initialFormState: MortgageData = {
-        mortgage: 5000,
+        mortgage: 10000,
+        payment: 500,
         interest: 2,
         periodTotal: 60,
-        periodDone: 12,
+        periodPaidOff: 12,
     }
     const [formState, dispatch] = useReducer(formReducer, initialFormState);
 
@@ -18,13 +22,14 @@ export const Mortgage = () => {
             field: event.target.name,
             payload: event.target.value,
         })
-        console.log(formState);
     }
+
     const handleSubmit = (event: any) => {
         event.preventDefault();
-        // event.stopPropagation();
-        console.log(event);
+
+        props.submitMortgage(formState);
     }
+
     return (
         <div>
             <form onSubmit={handleSubmit}>
@@ -37,10 +42,23 @@ export const Mortgage = () => {
                         max={250000}
                         min={1000}
                         onChange={handleChange}
+                        required
                     ></input>
                 </label>
                 <label>
-                    <p>Ränta (%):</p>
+                    <p>Månadsinbetalning:</p>
+                    <input
+                        type="number"
+                        name="payment"
+                        value={formState.payment}
+                        max={250000}
+                        min={1000}
+                        onChange={handleChange}
+                        required
+                    ></input>
+                </label>
+                <label>
+                    <p>Ränta per år (%):</p>
                     <input 
                         type="number" 
                         name="interest" 
@@ -48,6 +66,7 @@ export const Mortgage = () => {
                         max={100}
                         min={0}
                         onChange={handleChange}
+                        required
                     ></input>
                 </label>
                 <label>
@@ -59,17 +78,19 @@ export const Mortgage = () => {
                         max={120}
                         min={6}
                         onChange={handleChange}
+                        required
                     ></input>
                 </label>
                 <label>
-                    <p>Månader betalda:</p>
+                    <p>Antal betalda månader:</p>
                     <input 
                         type="number" 
-                        name="periodDone" 
-                        value={formState.periodDone} 
-                        max={formState.periodTotal - 1}
+                        name="periodPaidOff" 
+                        value={formState.periodPaidOff} 
+                        max={formState.periodTotal}
                         min={1}
                         onChange={handleChange}
+                        required
                     ></input>
                 </label>
                 <button type="submit">Kontrollera</button>
