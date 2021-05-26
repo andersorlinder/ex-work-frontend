@@ -1,20 +1,23 @@
 import { useReducer } from "react";
-import { MortgageData } from "../Models/mortgage";
+import { defaultMortgageFormData, initialMortgageData } from "../defaults";
+import { calculateMonthlyPayment } from "../functions/calculations";
+import { MortgageData } from "../models/mortgage";
 import formReducer, { InputType } from "../reducers/formReducers";
 
 interface MortgageFormProps {
     submitMortgage: (mortgageData: MortgageData) => void;
 }
 
-export const MortgageForm = (props: MortgageFormProps) => {
-    const initialFormState: MortgageData = {
-        mortgage: 10000,
-        payment: 500,
-        interest: 2,
-        periodTotal: 60,
-        periodPaidOff: 12,
-    }
-    const [formState, dispatch] = useReducer(formReducer, initialFormState);
+export interface MortgageFormData {
+    mortgage: number;
+    payment: number;
+    interest: number;
+    periodTotal: number;
+    periodPaidOff: number;
+}
+
+const MortgageFormComponent = (props: MortgageFormProps) => {
+    const [formState, dispatch] = useReducer(formReducer, defaultMortgageFormData);
 
     const handleChange = (event: any) => {
         dispatch({
@@ -26,31 +29,40 @@ export const MortgageForm = (props: MortgageFormProps) => {
 
     const handleSubmit = (event: any) => {
         event.preventDefault();
+        const mortgageData: MortgageData = {
+            mortgage: formState.mortgage,
+            payment: 0,
+            interest: formState.interest,
+            periodRemaining: formState.periodTotal,
+            submitted: true,
+        }
+        mortgageData.payment = calculateMonthlyPayment(mortgageData);
+        mortgageData.periodRemaining = formState.periodTotal - formState.periodPaidOff
 
-        props.submitMortgage(formState);
+        props.submitMortgage(mortgageData);
+    }
+
+    const resetForm = () => {
+        props.submitMortgage(initialMortgageData)
+        
+        for (const [key, value] of Object.entries(defaultMortgageFormData)) {
+            dispatch({
+                type: InputType.NUMBER,
+                field: key,
+                payload: value,
+            })
+        }
     }
 
     return (
         <div>
-            <form onSubmit={handleSubmit}>
+            <form name="container form-container" onSubmit={handleSubmit}>
                 <label>
                     <p>Ursprungligt lån:</p>
                     <input
                         type="number"
                         name="mortgage"
                         value={formState.mortgage}
-                        max={250000}
-                        min={1000}
-                        onChange={handleChange}
-                        required
-                    ></input>
-                </label>
-                <label>
-                    <p>Månadsinbetalning:</p>
-                    <input
-                        type="number"
-                        name="payment"
-                        value={formState.payment}
                         max={250000}
                         min={1000}
                         onChange={handleChange}
@@ -65,6 +77,7 @@ export const MortgageForm = (props: MortgageFormProps) => {
                         value={formState.interest} 
                         max={100}
                         min={0}
+                        step={0.01}
                         onChange={handleChange}
                         required
                     ></input>
@@ -95,6 +108,9 @@ export const MortgageForm = (props: MortgageFormProps) => {
                 </label>
                 <button type="submit">Kontrollera</button>
             </form>
+            <button onClick={resetForm}>Återställ</button>
         </div>
     )
 }
+
+export default MortgageFormComponent;

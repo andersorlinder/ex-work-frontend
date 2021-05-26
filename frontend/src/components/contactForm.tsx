@@ -1,8 +1,13 @@
 import { useReducer } from "react";
-import { ContactData } from "../Models/contact";
+import { ContactData } from "../models/contact";
+import { OfferData } from "../models/mortgage";
 import formReducer, { InputType } from "../reducers/formReducers";
 
-export const ContactForm = () => {
+interface ContactFormProps {
+    givenOffer?: OfferData;
+}
+
+const ContactFormComponent = (props: ContactFormProps) => {
     const initialFormState: ContactData = {
         name: "",
         address: "",
@@ -25,12 +30,8 @@ export const ContactForm = () => {
         event.preventDefault();
     }
 
-    // const resetForms = () => {
-    //     formState = initialFormState;
-    // }
-
     return (
-        <div>
+        <div className="container form-container">
             <form onSubmit={handleSubmit}>
                 <label>
                     <p>Namn:</p>
@@ -95,8 +96,9 @@ export const ContactForm = () => {
                     ></input>
                 </label>
                 <button type="submit">Ansök</button>
-                {/* <button onClick={resetForms}></button> */}
             </form>
         </div>
     )
 }
+
+export default ContactFormComponent;

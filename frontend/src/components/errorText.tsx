@@ -5,6 +5,6 @@ interface ErrorTextProps {
 export const ErrorText = (props: ErrorTextProps) => {
     const { label } = props;
     return (
-        <p className="red-text">{label}</p>
+        <h4 className="red-text">{label}</h4>
     )
 }

@@ -20,8 +20,8 @@ label {
 
 input[type=number] {
   width: 100px;
-  clear: both;
-  float: right;
+  /* clear: both;
+  float: right; */
   /* margin: 0 0.5em; */
 }
 
