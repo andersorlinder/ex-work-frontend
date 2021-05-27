@@ -1,3 +1,11 @@
+export interface MortgageFormData {
+    mortgage: number;
+    payment: number;
+    interest: number;
+    periodTotal: number;
+    periodPaidOff: number;
+}
+
 export interface MortgageData {
     mortgage: number;
     payment: number;
@@ -6,7 +14,7 @@ export interface MortgageData {
     submitted: boolean
 }
 
-export interface OfferData {
+export interface MortgageOfferData {
     mortgage: number;
     newPayment?: number;
     newInterest?: number;

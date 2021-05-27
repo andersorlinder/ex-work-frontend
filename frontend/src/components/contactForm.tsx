@@ -1,14 +1,18 @@
+import React from "react";
 import { useReducer } from "react";
-import { ContactData } from "../models/contact";
-import { OfferData } from "../models/mortgage";
+import { apiURL } from "../defaults";
+import { ApplicationData, ContactFormData } from "../models/contact";
+import { MortgageOfferData } from "../models/mortgage";
 import formReducer, { InputType } from "../reducers/formReducers";
+import postRequest from "../server/http_request";
 
 interface ContactFormProps {
-    givenOffer?: OfferData;
+    givenOffer: MortgageOfferData;
 }
 
 const ContactFormComponent = (props: ContactFormProps) => {
-    const initialFormState: ContactData = {
+    const statusRef = React.createRef<HTMLParagraphElement>();
+    const initialFormState: ContactFormData = {
         name: "",
         address: "",
         zipCode: null,
@@ -28,6 +32,9 @@ const ContactFormComponent = (props: ContactFormProps) => {
 
     const handleSubmit = (event: any) => {
         event.preventDefault();
+        const postObject: ApplicationData = { contact: formState, offer: props.givenOffer}
+        const jsonString = JSON.stringify(postObject);
+        postRequest(apiURL, jsonString)
     }
 
     return (
@@ -97,6 +104,7 @@ const ContactFormComponent = (props: ContactFormProps) => {
                 </label>
                 <button type="submit">Ansök</button>
             </form>
+            <p ref={statusRef}></p>
         </div>
     )
 }

@@ -1,6 +1,6 @@
-import { MortgageFormData } from "./components/mortgageForm";
-import { MortgageData, OfferData } from "./models/mortgage";
+import { MortgageData, MortgageFormData, MortgageOfferData } from "./models/mortgage";
 
+export const apiURL = "http://localhost:53712/Annual_mortgage/submit"
 export const interestOffer = 3.5;
 export const profitThreshold = 500;
 export const noOffer = "Tyvärr, vi kan inte erbjuda er ett låneerbjudande.";
@@ -20,7 +20,7 @@ export const initialMortgageData: MortgageData = {
         defaultMortgageFormData.periodPaidOff,
     submitted: false,
 }
-export const mortgageOffer: OfferData = {
+export const mortgageOffer: MortgageOfferData = {
     mortgage: defaultMortgageFormData.mortgage,
     newPayment: defaultMortgageFormData.payment,
     newInterest: interestOffer,

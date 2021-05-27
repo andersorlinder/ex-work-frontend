@@ -1,9 +1,9 @@
 import { interestOffer, profitThreshold } from "../defaults";
-import { MortgageData, OfferData } from "../models/mortgage";
+import { MortgageData, MortgageOfferData } from "../models/mortgage";
 
 export function getMortgageOffer(
     initialMortgageData: MortgageData
-): OfferData {
+): MortgageOfferData {
     const remainingMortgageAmount = calculateRemainingMortgage(initialMortgageData);
     if (initialMortgageData.interest <= 3.5) {
         return { mortgage: remainingMortgageAmount };
@@ -22,7 +22,7 @@ export function getMortgageOffer(
         return { mortgage: remainingMortgageAmount };
     }
 
-    const mortgageOffer: OfferData = {
+    const mortgageOffer: MortgageOfferData = {
         mortgage: newMortgageData.mortgage,
         newPayment: newMortgageData.payment,
         newInterest: newMortgageData.interest,

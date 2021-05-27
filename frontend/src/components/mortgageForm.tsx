@@ -8,14 +8,6 @@ interface MortgageFormProps {
     submitMortgage: (mortgageData: MortgageData) => void;
 }
 
-export interface MortgageFormData {
-    mortgage: number;
-    payment: number;
-    interest: number;
-    periodTotal: number;
-    periodPaidOff: number;
-}
-
 const MortgageFormComponent = (props: MortgageFormProps) => {
     const [formState, dispatch] = useReducer(formReducer, defaultMortgageFormData);
 
