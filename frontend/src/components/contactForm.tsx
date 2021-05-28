@@ -32,13 +32,14 @@ const ContactFormComponent = (props: ContactFormProps) => {
 
     const handleSubmit = (event: any) => {
         event.preventDefault();
-        const postObject: ApplicationData = { contact: formState, offer: props.givenOffer}
+        const postObject: ApplicationData = { ...formState, ...props.givenOffer }
         const jsonString = JSON.stringify(postObject);
         postRequest(apiURL, jsonString)
     }
 
     return (
-        <div className="container form-container">
+        <div className="container contact-form">
+            <h4><u>Ansökningsformulär</u></h4>
             <form onSubmit={handleSubmit}>
                 <label>
                     <p>Namn:</p>

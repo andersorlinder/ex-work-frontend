@@ -11,13 +11,9 @@ function App() {
       <header className="App-header">
         Flytta annuitetslån
       </header>
-      <MortgageFormComponent
-        submitMortgage={submitMortgage}
-      ></MortgageFormComponent>
+      <MortgageFormComponent submitMortgage={submitMortgage} />
       {mortgageData.submitted && (
-        <MortgageOfferComponent
-          mortgageData={mortgageData}
-        ></MortgageOfferComponent>
+        <MortgageOfferComponent mortgageData={mortgageData} />
       )}
     </div>
   );

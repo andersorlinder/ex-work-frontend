@@ -16,7 +16,8 @@ export interface MortgageData {
 
 export interface MortgageOfferData {
     mortgage: number;
-    newPayment?: number;
-    newInterest?: number;
-    fullProfit?: number;
+    payment?: number;
+    interest?: number;
+    customerProfit?: number;
+    bankProfit?: number;
 }

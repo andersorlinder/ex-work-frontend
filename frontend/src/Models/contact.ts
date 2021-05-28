@@ -5,7 +5,7 @@ export interface ContactFormData {
         address: string,
         zipCode: number | null,
         city: string,
-        phoneNumber: number | null,
+        phoneNumber: string | null,
         email: string,
     }
 

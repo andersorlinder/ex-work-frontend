@@ -47,8 +47,8 @@ const MortgageFormComponent = (props: MortgageFormProps) => {
     }
 
     return (
-        <div>
-            <form name="container form-container" onSubmit={handleSubmit}>
+        <div className="container mortgage-form">
+            <form name="form-container" onSubmit={handleSubmit}>
                 <label>
                     <p>Ursprungligt lån:</p>
                     <input
@@ -60,6 +60,7 @@ const MortgageFormComponent = (props: MortgageFormProps) => {
                         onChange={handleChange}
                         required
                     ></input>
+                    <div className="input-unit-box">kr</div>
                 </label>
                 <label>
                     <p>Ränta per år (%):</p>
@@ -73,6 +74,7 @@ const MortgageFormComponent = (props: MortgageFormProps) => {
                         onChange={handleChange}
                         required
                     ></input>
+                    <div className="input-unit-box">%</div>
                 </label>
                 <label>
                     <p>Lånets längd (månader):</p>
@@ -85,6 +87,7 @@ const MortgageFormComponent = (props: MortgageFormProps) => {
                         onChange={handleChange}
                         required
                     ></input>
+                    <div className="input-unit-box">mån</div>
                 </label>
                 <label>
                     <p>Antal betalda månader:</p>
@@ -97,6 +100,7 @@ const MortgageFormComponent = (props: MortgageFormProps) => {
                         onChange={handleChange}
                         required
                     ></input>
+                    <div className="input-unit-box">mån</div>
                 </label>
                 <button type="submit">Kontrollera</button>
             </form>

@@ -1,8 +1,8 @@
-import { noOffer } from "../defaults";
+import { noOfferMessage, offerApprovedMessage } from "../defaults";
 import { getMortgageOffer } from "../functions/calculations";
 import { MortgageData } from "../models/mortgage";
 import ContactFormComponent from "./contactForm";
-import { ErrorText } from "./errorText";
+import StatusText, { StatusType } from "./statusText";
 
 interface MortgageResultProps {
     mortgageData?: MortgageData;
@@ -16,21 +16,23 @@ const MortgageOfferComponent = (props: MortgageResultProps) => {
 
     const mortgageOffer = getMortgageOffer(mortgageData);
 
-    return mortgageOffer.newPayment ? (
+    return mortgageOffer.payment ? (
         <div className="container">
-            <h4>Grattis, vi kan erbjuda dig ett bättre lån!</h4>
-            <p>Ny annuitet: <strong>{mortgageOffer.newPayment} kr</strong></p>
-            <p>Total vinst: <strong>{mortgageOffer.fullProfit} kr</strong></p>
-            <p>Ny ränta: <strong>{mortgageOffer.newInterest}%</strong></p>
-            <p>Kvarvarande lånebelopp: <strong>{mortgageOffer.mortgage} kr</strong></p>
-            <ContactFormComponent
-                givenOffer={mortgageOffer}
-            ></ContactFormComponent>
+            <StatusText status={StatusType.APPROVED} label={offerApprovedMessage} />
+            <div className="results">
+                <p>Ny månadsinbetalning: <strong>{mortgageOffer.payment} kr</strong></p>
+                <p>Total vinst: <strong>{mortgageOffer.customerProfit} kr</strong></p>
+                <p>Ny ränta: <strong>{mortgageOffer.interest}%</strong></p>
+                <p>Kvarvarande lånebelopp: <strong>{mortgageOffer.mortgage} kr</strong></p>
+            </div>
+            <ContactFormComponent givenOffer={mortgageOffer} />
         </div>
     ): (
         <div>
-            <ErrorText label={noOffer}></ErrorText>
-            <p>Kvarvarande lånebelopp: <strong>{mortgageOffer.mortgage} kr</strong></p>
+            <StatusText status={StatusType.FAIL} label={noOfferMessage} />
+            <div className="results">
+                <p>Kvarvarande lånebelopp: <strong>{mortgageOffer.mortgage} kr</strong></p>
+            </div>
         </div>
     )
 }

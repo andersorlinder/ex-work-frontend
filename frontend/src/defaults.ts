@@ -3,7 +3,8 @@ import { MortgageData, MortgageFormData, MortgageOfferData } from "./models/mort
 export const apiURL = "http://localhost:53712/Annual_mortgage/submit"
 export const interestOffer = 3.5;
 export const profitThreshold = 500;
-export const noOffer = "Tyvärr, vi kan inte erbjuda er ett låneerbjudande.";
+export const noOfferMessage = "Tyvärr, vi kan inte erbjuda er ett låneerbjudande.";
+export const offerApprovedMessage = "Grattis, vi kan erbjuda dig ett bättre lån!"
 export const defaultMortgageFormData: MortgageFormData = {
     mortgage: 25000,
     payment: 490,
@@ -22,7 +23,7 @@ export const initialMortgageData: MortgageData = {
 }
 export const mortgageOffer: MortgageOfferData = {
     mortgage: defaultMortgageFormData.mortgage,
-    newPayment: defaultMortgageFormData.payment,
-    newInterest: interestOffer,
-    fullProfit: 1000,
+    payment: defaultMortgageFormData.payment,
+    interest: interestOffer,
+    customerProfit: 1000,
 }

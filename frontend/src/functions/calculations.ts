@@ -24,9 +24,10 @@ export function getMortgageOffer(
 
     const mortgageOffer: MortgageOfferData = {
         mortgage: newMortgageData.mortgage,
-        newPayment: newMortgageData.payment,
-        newInterest: newMortgageData.interest,
-        fullProfit: profits.customerProfit,
+        payment: newMortgageData.payment,
+        interest: newMortgageData.interest,
+        customerProfit: profits.customerProfit,
+        bankProfit: profits.bankProfit,
     }
 
     return mortgageOffer;
