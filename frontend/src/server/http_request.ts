@@ -4,7 +4,9 @@ async function postRequest(apiURL: string, body: string) {
         mode: 'cors',
         headers: {
             'Content-Type': 'application/json',
-            "Access-Control-Allow-Origin": "*"
+            'Access-Control-Allow-Methods': 'GET, PUT, POST, DELETE, HEAD, OPTIONS',
+            'Access-Control-Allow-Origin': 'http://localhost:19595',
+            'Access-Control-Allow-Credentials': 'true',
         },
         body
     })

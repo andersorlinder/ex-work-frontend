@@ -1,15 +1,22 @@
-import { MortgageOfferData } from "./mortgage";
-
 export interface ContactFormData {
         name: string;
-        address: string,
-        zipCode: number | null,
-        city: string,
-        phoneNumber: string | null,
-        email: string,
+        address: string;
+        zipCode: number;
+        city: string;
+        phoneNumber: string;
+        email: string;
     }
 
 export interface ApplicationData {
-    contact: ContactFormData,
-    offer: MortgageOfferData
+    name: string;
+    address: string;
+    zipCode: number;
+    city: string;
+    phoneNumber: string;
+    email: string;
+    mortgage: number;
+    payment: number;
+    interest: number;
+    customerProfit: number;
+    bankProfit: number;
 }

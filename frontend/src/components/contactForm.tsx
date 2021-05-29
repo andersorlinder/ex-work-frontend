@@ -1,6 +1,6 @@
 import React from "react";
 import { useReducer } from "react";
-import { apiURL } from "../defaults";
+import { mortgageApplicationApiUrl } from "../defaults";
 import { ApplicationData, ContactFormData } from "../models/contact";
 import { MortgageOfferData } from "../models/mortgage";
 import formReducer, { InputType } from "../reducers/formReducers";
@@ -15,9 +15,9 @@ const ContactFormComponent = (props: ContactFormProps) => {
     const initialFormState: ContactFormData = {
         name: "",
         address: "",
-        zipCode: null,
+        zipCode: 0,
         city: "",
-        phoneNumber: null,
+        phoneNumber: "",
         email: "",
     }
     const [formState, dispatch] = useReducer(formReducer, initialFormState);
@@ -32,9 +32,9 @@ const ContactFormComponent = (props: ContactFormProps) => {
 
     const handleSubmit = (event: any) => {
         event.preventDefault();
-        const postObject: ApplicationData = { ...formState, ...props.givenOffer }
-        const jsonString = JSON.stringify(postObject);
-        postRequest(apiURL, jsonString)
+        const applicationData: ApplicationData = { ...formState, ...props.givenOffer }
+        const body = JSON.stringify(applicationData);
+        postRequest(mortgageApplicationApiUrl, body)
     }
 
     return (

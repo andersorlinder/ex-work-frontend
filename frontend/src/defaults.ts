@@ -1,6 +1,6 @@
 import { MortgageData, MortgageFormData, MortgageOfferData } from "./models/mortgage";
 
-export const apiURL = "http://localhost:53712/Annual_mortgage/submit"
+export const mortgageApplicationApiUrl = "http://localhost:19595/MortgageApplication/submit"
 export const interestOffer = 3.5;
 export const profitThreshold = 500;
 export const noOfferMessage = "Tyvärr, vi kan inte erbjuda er ett låneerbjudande.";
