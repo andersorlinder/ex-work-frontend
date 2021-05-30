@@ -1,6 +1,6 @@
 import { noOfferMessage, offerApprovedMessage } from "../defaults";
 import { getMortgageOffer } from "../functions/calculations";
-import { MortgageData } from "../models/mortgage";
+import { MortgageData } from "../models/mortgageModels";
 import ContactFormComponent from "./contactForm";
 import StatusText, { StatusType } from "./statusText";
 

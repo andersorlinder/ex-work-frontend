@@ -1,8 +1,8 @@
 import React from "react";
 import { useReducer } from "react";
 import { mortgageApplicationApiUrl } from "../defaults";
-import { ApplicationData, ContactFormData } from "../models/contact";
-import { MortgageOfferData } from "../models/mortgage";
+import { ApplicationData, ContactFormData } from "../models/applicationModels";
+import { MortgageOfferData } from "../models/mortgageModels";
 import formReducer, { InputType } from "../reducers/formReducers";
 import postRequest from "../server/http_request";
 

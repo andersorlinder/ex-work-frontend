@@ -1,4 +1,4 @@
-import { MortgageData, MortgageFormData, MortgageOfferData } from "./models/mortgage";
+import { MortgageData, MortgageFormData, MortgageOfferData } from "./models/mortgageModels";
 
 export const mortgageApplicationApiUrl = "http://localhost:19595/MortgageApplication/submit"
 export const interestOffer = 3.5;

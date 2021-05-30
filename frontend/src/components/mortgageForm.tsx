@@ -1,7 +1,7 @@
 import { useReducer } from "react";
 import { defaultMortgageFormData, initialMortgageData } from "../defaults";
 import { calculateMonthlyPayment } from "../functions/calculations";
-import { MortgageData } from "../models/mortgage";
+import { MortgageData } from "../models/mortgageModels";
 import formReducer, { InputType } from "../reducers/formReducers";
 
 interface MortgageFormProps {
