@@ -1,19 +1,44 @@
-import { useState } from 'react';
+import { useReducer, useState } from 'react';
 import MortgageFormComponent from './components/mortgageForm';
 import MortgageOfferComponent from './components/mortgageResult';
-import { initialMortgageData } from './defaults';
+import { defaultMortgageFormData, initialMortgageData } from './defaults';
+import formReducer, { InputType } from './reducers/formReducers';
 
 function App() {
+  const [formState, dispatch] = useReducer(formReducer, defaultMortgageFormData);
   const [mortgageData, submitMortgage] = useState(initialMortgageData);
   
+  const goToDefaultState = () => {
+    submitMortgage(initialMortgageData)
+    for (const [key, value] of Object.entries(defaultMortgageFormData)) {
+      dispatch({
+          type: InputType.NUMBER,
+          field: key,
+          payload: value,
+      })
+    }
+  }
+
+  const clearMortgageOffer = () => {
+    submitMortgage({ ...mortgageData, submitted: false})
+  }
+
   return (
     <div className="App">
       <header className="App-header">
         Flytta annuitetslån
       </header>
-      <MortgageFormComponent submitMortgage={submitMortgage} />
+      <MortgageFormComponent
+        formState={formState}
+        onChange={dispatch}
+        submitMortgage={submitMortgage}
+        resetForm={goToDefaultState}
+      />
       {mortgageData.submitted && (
-        <MortgageOfferComponent mortgageData={mortgageData} />
+        <MortgageOfferComponent
+          mortgageData={mortgageData}
+          resetApplication={clearMortgageOffer}
+        />
       )}
     </div>
   );

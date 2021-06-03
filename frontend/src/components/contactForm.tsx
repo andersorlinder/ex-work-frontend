@@ -1,28 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import { useReducer } from "react";
-import { mortgageApplicationApiUrl } from "../defaults";
-import { ApplicationData, ContactFormData } from "../models/applicationModels";
+import { defaultContactFormData, mortgageApplicationApiUrl } from "../defaults";
+import { ApplicationData } from "../models/applicationModels";
 import { MortgageOfferData } from "../models/mortgageModels";
 import formReducer, { InputType } from "../reducers/formReducers";
 import postRequest from "../server/http_request";
+import StatusText, { StatusType } from "./statusText";
 
 interface ContactFormProps {
     givenOffer: MortgageOfferData;
+    onSubmit:() => void;
 }
 
 const ContactFormComponent = (props: ContactFormProps) => {
-    const statusRef = React.createRef<HTMLParagraphElement>();
-    const initialFormState: ContactFormData = {
-        name: "",
-        address: "",
-        zipCode: 0,
-        city: "",
-        phoneNumber: "",
-        email: "",
-    }
-    const [formState, dispatch] = useReducer(formReducer, initialFormState);
+    const [formState, dispatch] = useReducer(formReducer, defaultContactFormData);
+    const [submittedResponse, setRespsons] = useState(0);
+    const [submitButtonDisabled, handleButtonState] = useState(false);
 
-    const handleChange = (event: any) => {
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         dispatch({
             type: InputType.TEXT,   
             field: event.target.name,
@@ -30,12 +25,26 @@ const ContactFormComponent = (props: ContactFormProps) => {
         })
     }
 
-    const handleSubmit = (event: any) => {
+    async function handleSubmit(event: React.FormEvent) {
         event.preventDefault();
         const applicationData: ApplicationData = { ...formState, ...props.givenOffer }
         const body = JSON.stringify(applicationData);
-        postRequest(mortgageApplicationApiUrl, body)
+        const respons = await postRequest(mortgageApplicationApiUrl, body);
+        setRespsons(respons);
+
+        if (respons === 200) {
+            handleButtonState(true);
+            setTimeout(() => {
+                props.onSubmit();
+            }, 3000)
+        }
     }
+
+    const submitStatus = submittedResponse
+    ? submittedResponse === 200 
+        ? <StatusText status={StatusType.APPROVED} label="Ansökan registrerad!" />
+        : <StatusText status={StatusType.FAIL} label="Serverfel, vänligen försök igen" />
+    : null
 
     return (
         <div className="container contact-form">
@@ -103,9 +112,9 @@ const ContactFormComponent = (props: ContactFormProps) => {
                         required
                     ></input>
                 </label>
-                <button type="submit">Ansök</button>
+                <button type="submit" disabled={submitButtonDisabled}>Ansök</button>
             </form>
-            <p ref={statusRef}></p>
+            {submitStatus}
         </div>
     )
 }

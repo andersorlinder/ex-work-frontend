@@ -1,10 +1,14 @@
+import { ContactFormData } from "./models/applicationModels";
 import { MortgageData, MortgageFormData, MortgageOfferData } from "./models/mortgageModels";
 
-export const mortgageApplicationApiUrl = "http://localhost:19595/MortgageApplication/submit"
+export const mortgageApplicationApiUrl = "http://localhost:5000/MortgageApplication/submit"
+export const minMortgageAmount = 1000;
+export const maxMortgageAmount = 250000;
+export const minTotalPeriod = 6;
+export const maxTotalPeriod = 120;
+export const maxInterest = 100;
 export const interestOffer = 3.5;
 export const profitThreshold = 500;
-export const noOfferMessage = "Tyvärr, vi kan inte erbjuda er ett låneerbjudande.";
-export const offerApprovedMessage = "Grattis, vi kan erbjuda dig ett bättre lån!"
 export const defaultMortgageFormData: MortgageFormData = {
     mortgage: 25000,
     payment: 490,
@@ -26,4 +30,12 @@ export const mortgageOffer: MortgageOfferData = {
     payment: defaultMortgageFormData.payment,
     interest: interestOffer,
     customerProfit: 1000,
+}
+export const defaultContactFormData: ContactFormData = {
+    name: "",
+    address: "",
+    zipCode: 0,
+    city: "",
+    phoneNumber: "",
+    email: "",
 }

@@ -1,25 +1,33 @@
-import { useReducer } from "react";
-import { defaultMortgageFormData, initialMortgageData } from "../defaults";
+import React from "react";
+import {
+    maxInterest,
+    maxMortgageAmount,
+    maxTotalPeriod,
+    minMortgageAmount,
+    minTotalPeriod,
+} from "../defaults";
 import { calculateMonthlyPayment } from "../functions/calculations";
-import { MortgageData } from "../models/mortgageModels";
-import formReducer, { InputType } from "../reducers/formReducers";
+import { MortgageData, MortgageFormData } from "../models/mortgageModels";
+import { InputType } from "../reducers/formReducers";
 
 interface MortgageFormProps {
+    formState: MortgageFormData;
+    onChange: React.Dispatch<{ type: InputType, field: string, payload: string}>;
     submitMortgage: (mortgageData: MortgageData) => void;
+    resetForm: () => void;
 }
 
 const MortgageFormComponent = (props: MortgageFormProps) => {
-    const [formState, dispatch] = useReducer(formReducer, defaultMortgageFormData);
-
-    const handleChange = (event: any) => {
-        dispatch({
+    const { formState } = props;
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        props.onChange({
             type: InputType.NUMBER,
             field: event.target.name,
             payload: event.target.value,
         })
     }
 
-    const handleSubmit = (event: any) => {
+    const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
         const mortgageData: MortgageData = {
             mortgage: formState.mortgage,
@@ -34,18 +42,6 @@ const MortgageFormComponent = (props: MortgageFormProps) => {
         props.submitMortgage(mortgageData);
     }
 
-    const resetForm = () => {
-        props.submitMortgage(initialMortgageData)
-        
-        for (const [key, value] of Object.entries(defaultMortgageFormData)) {
-            dispatch({
-                type: InputType.NUMBER,
-                field: key,
-                payload: value,
-            })
-        }
-    }
-
     return (
         <div className="container mortgage-form">
             <form name="form-container" onSubmit={handleSubmit}>
@@ -55,8 +51,8 @@ const MortgageFormComponent = (props: MortgageFormProps) => {
                         type="number"
                         name="mortgage"
                         value={formState.mortgage}
-                        max={250000}
-                        min={1000}
+                        max={maxMortgageAmount}
+                        min={minMortgageAmount}
                         onChange={handleChange}
                         required
                     ></input>
@@ -68,7 +64,7 @@ const MortgageFormComponent = (props: MortgageFormProps) => {
                         type="number" 
                         name="interest" 
                         value={formState.interest} 
-                        max={100}
+                        max={maxInterest}
                         min={0}
                         step={0.01}
                         onChange={handleChange}
@@ -82,8 +78,8 @@ const MortgageFormComponent = (props: MortgageFormProps) => {
                         type="number" 
                         name="periodTotal" 
                         value={formState.periodTotal} 
-                        max={120}
-                        min={6}
+                        max={maxTotalPeriod}
+                        min={minTotalPeriod}
                         onChange={handleChange}
                         required
                     ></input>
@@ -95,8 +91,8 @@ const MortgageFormComponent = (props: MortgageFormProps) => {
                         type="number" 
                         name="periodPaidOff" 
                         value={formState.periodPaidOff} 
-                        max={formState.periodTotal}
-                        min={1}
+                        max={formState.periodTotal - 3}
+                        min={0}
                         onChange={handleChange}
                         required
                     ></input>
@@ -104,7 +100,7 @@ const MortgageFormComponent = (props: MortgageFormProps) => {
                 </label>
                 <button type="submit">Kontrollera</button>
             </form>
-            <button onClick={resetForm}>Återställ</button>
+            <button onClick={props.resetForm}>Återställ</button>
         </div>
     )
 }
