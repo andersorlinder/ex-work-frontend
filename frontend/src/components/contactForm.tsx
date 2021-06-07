@@ -9,25 +9,31 @@ import StatusText, { StatusType } from "./statusText";
 
 interface ContactFormProps {
     givenOffer: MortgageOfferData;
-    onSubmit:() => void;
+    onSubmit: () => void;
 }
 
 const ContactFormComponent = (props: ContactFormProps) => {
-    const [formState, dispatch] = useReducer(formReducer, defaultContactFormData);
+    const [formState, dispatch] = useReducer(
+        formReducer,
+        defaultContactFormData
+    );
     const [submittedResponse, setRespsons] = useState(0);
     const [submitButtonDisabled, handleButtonState] = useState(false);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         dispatch({
-            type: InputType.TEXT,   
+            type: InputType.TEXT,
             field: event.target.name,
             payload: event.target.value,
-        })
-    }
+        });
+    };
 
     async function handleSubmit(event: React.FormEvent) {
         event.preventDefault();
-        const applicationData: ApplicationData = { ...formState, ...props.givenOffer }
+        const applicationData: ApplicationData = {
+            ...formState,
+            ...props.givenOffer,
+        };
         const body = JSON.stringify(applicationData);
         const respons = await postRequest(mortgageApplicationApiUrl, body);
         setRespsons(respons);
@@ -36,19 +42,29 @@ const ContactFormComponent = (props: ContactFormProps) => {
             handleButtonState(true);
             setTimeout(() => {
                 props.onSubmit();
-            }, 3000)
+            }, 3000);
         }
     }
 
-    const submitStatus = submittedResponse
-    ? submittedResponse === 200 
-        ? <StatusText status={StatusType.APPROVED} label="Ansökan registrerad!" />
-        : <StatusText status={StatusType.FAIL} label="Serverfel, vänligen försök igen" />
-    : null
+    const submitStatus = submittedResponse ? (
+        submittedResponse === 200 ? (
+            <StatusText
+                status={StatusType.APPROVED}
+                label="Ansökan registrerad!"
+            />
+        ) : (
+            <StatusText
+                status={StatusType.FAIL}
+                label="Serverfel, vänligen försök igen"
+            />
+        )
+    ) : null;
 
     return (
         <div className="container contact-form">
-            <h4><u>Ansökningsformulär</u></h4>
+            <h4>
+                <u>Ansökningsformulär</u>
+            </h4>
             <form onSubmit={handleSubmit}>
                 <label>
                     <p>Namn:</p>
@@ -62,17 +78,17 @@ const ContactFormComponent = (props: ContactFormProps) => {
                 </label>
                 <label>
                     <p>Adress:</p>
-                    <input 
-                        type="text" 
-                        name="address" 
-                        value={formState.address} 
+                    <input
+                        type="text"
+                        name="address"
+                        value={formState.address}
                         onChange={handleChange}
                         required
                     ></input>
                 </label>
                 <label>
                     <p>Postnummer:</p>
-                    <input 
+                    <input
                         type="number"
                         name="zipCode"
                         value={formState.zipCode || ""}
@@ -84,17 +100,17 @@ const ContactFormComponent = (props: ContactFormProps) => {
                 </label>
                 <label>
                     <p>Postort:</p>
-                    <input 
-                        type="text" 
-                        name="city" 
-                        value={formState.city} 
+                    <input
+                        type="text"
+                        name="city"
+                        value={formState.city}
                         onChange={handleChange}
                         required
                     ></input>
                 </label>
                 <label>
                     <p>Telefonnummer:</p>
-                    <input 
+                    <input
                         type="tel"
                         name="phoneNumber"
                         value={formState.phoneNumber || ""}
@@ -104,7 +120,7 @@ const ContactFormComponent = (props: ContactFormProps) => {
                 </label>
                 <label>
                     <p>Epost:</p>
-                    <input 
+                    <input
                         type="email"
                         name="email"
                         value={formState.email}
@@ -112,11 +128,13 @@ const ContactFormComponent = (props: ContactFormProps) => {
                         required
                     ></input>
                 </label>
-                <button type="submit" disabled={submitButtonDisabled}>Ansök</button>
+                <button type="submit" disabled={submitButtonDisabled}>
+                    Ansök
+                </button>
             </form>
             {submitStatus}
         </div>
-    )
-}
+    );
+};
 
 export default ContactFormComponent;

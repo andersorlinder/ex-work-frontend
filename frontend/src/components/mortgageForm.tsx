@@ -12,7 +12,11 @@ import { InputType } from "../reducers/formReducers";
 
 interface MortgageFormProps {
     formState: MortgageFormData;
-    onChange: React.Dispatch<{ type: InputType, field: string, payload: string}>;
+    onChange: React.Dispatch<{
+        type: InputType;
+        field: string;
+        payload: string;
+    }>;
     submitMortgage: (mortgageData: MortgageData) => void;
     resetForm: () => void;
 }
@@ -24,8 +28,8 @@ const MortgageFormComponent = (props: MortgageFormProps) => {
             type: InputType.NUMBER,
             field: event.target.name,
             payload: event.target.value,
-        })
-    }
+        });
+    };
 
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
@@ -35,12 +39,13 @@ const MortgageFormComponent = (props: MortgageFormProps) => {
             interest: formState.interest,
             periodRemaining: formState.periodTotal,
             submitted: true,
-        }
+        };
         mortgageData.payment = calculateMonthlyPayment(mortgageData);
-        mortgageData.periodRemaining = formState.periodTotal - formState.periodPaidOff
+        mortgageData.periodRemaining =
+            formState.periodTotal - formState.periodPaidOff;
 
         props.submitMortgage(mortgageData);
-    }
+    };
 
     return (
         <div className="container mortgage-form">
@@ -60,10 +65,10 @@ const MortgageFormComponent = (props: MortgageFormProps) => {
                 </label>
                 <label>
                     <p>Ränta per år (%):</p>
-                    <input 
-                        type="number" 
-                        name="interest" 
-                        value={formState.interest} 
+                    <input
+                        type="number"
+                        name="interest"
+                        value={formState.interest}
                         max={maxInterest}
                         min={0}
                         step={0.01}
@@ -74,10 +79,10 @@ const MortgageFormComponent = (props: MortgageFormProps) => {
                 </label>
                 <label>
                     <p>Lånets längd (månader):</p>
-                    <input 
-                        type="number" 
-                        name="periodTotal" 
-                        value={formState.periodTotal} 
+                    <input
+                        type="number"
+                        name="periodTotal"
+                        value={formState.periodTotal}
                         max={maxTotalPeriod}
                         min={minTotalPeriod}
                         onChange={handleChange}
@@ -87,10 +92,10 @@ const MortgageFormComponent = (props: MortgageFormProps) => {
                 </label>
                 <label>
                     <p>Antal betalda månader:</p>
-                    <input 
-                        type="number" 
-                        name="periodPaidOff" 
-                        value={formState.periodPaidOff} 
+                    <input
+                        type="number"
+                        name="periodPaidOff"
+                        value={formState.periodPaidOff}
                         max={formState.periodTotal - 3}
                         min={0}
                         onChange={handleChange}
@@ -102,7 +107,7 @@ const MortgageFormComponent = (props: MortgageFormProps) => {
             </form>
             <button onClick={props.resetForm}>Återställ</button>
         </div>
-    )
-}
+    );
+};
 
 export default MortgageFormComponent;
