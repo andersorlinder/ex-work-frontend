@@ -6,7 +6,7 @@ export function getMortgageOffer(
 ): MortgageOfferData {
     const remainingMortgageAmount =
         calculateRemainingMortgage(initialMortgageData);
-    if (initialMortgageData.interest <= 3.5) {
+    if (initialMortgageData.interest <= interestOffer) {
         return { mortgage: remainingMortgageAmount };
     }
 
