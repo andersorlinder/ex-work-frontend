@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { useReducer } from "react";
 import { defaultContactFormData, mortgageApplicationApiUrl } from "../defaults";
 import { ApplicationData } from "../models/applicationModels";
+import { InputType } from "../models/InputModel";
 import { MortgageOfferData } from "../models/mortgageModels";
-import formReducer, { InputType } from "../reducers/formReducers";
+import formReducer from "../reducers/formReducers";
 import postRequest from "../server/http_request";
 import StatusText, { StatusType } from "./statusText";
 
@@ -12,16 +13,16 @@ interface ContactFormProps {
     onSubmit: () => void;
 }
 
-const ContactFormComponent = (props: ContactFormProps) => {
-    const [formState, dispatch] = useReducer(
+const ContactFormComponent = (props: ContactFormProps): JSX.Element => {
+    const [formState, setFormState] = useReducer(
         formReducer,
         defaultContactFormData
     );
     const [submittedResponse, setRespsons] = useState(0);
-    const [submitButtonDisabled, handleButtonState] = useState(false);
+    const [submitButtonDisabled, disableButton] = useState(false);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        dispatch({
+        setFormState({
             type: InputType.TEXT,
             field: event.target.name,
             payload: event.target.value,
@@ -39,7 +40,7 @@ const ContactFormComponent = (props: ContactFormProps) => {
         setRespsons(respons);
 
         if (respons === 200) {
-            handleButtonState(true);
+            disableButton(true);
             setTimeout(() => {
                 props.onSubmit();
             }, 3000);

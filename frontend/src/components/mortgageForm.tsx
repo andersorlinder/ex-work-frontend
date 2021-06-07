@@ -7,21 +7,17 @@ import {
     minTotalPeriod,
 } from "../defaults";
 import { calculateMonthlyPayment } from "../functions/calculations";
+import { InputAction, InputType } from "../models/InputModel";
 import { MortgageData, MortgageFormData } from "../models/mortgageModels";
-import { InputType } from "../reducers/formReducers";
 
 interface MortgageFormProps {
     formState: MortgageFormData;
-    onChange: React.Dispatch<{
-        type: InputType;
-        field: string;
-        payload: string;
-    }>;
+    onChange: (InputState: InputAction) => void;
     submitMortgage: (mortgageData: MortgageData) => void;
     resetForm: () => void;
 }
 
-const MortgageFormComponent = (props: MortgageFormProps) => {
+const MortgageFormComponent = (props: MortgageFormProps): JSX.Element => {
     const { formState } = props;
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         props.onChange({
@@ -55,7 +51,7 @@ const MortgageFormComponent = (props: MortgageFormProps) => {
                     <input
                         type="number"
                         name="mortgage"
-                        value={formState.mortgage}
+                        value={formState.mortgage.toString()}
                         max={maxMortgageAmount}
                         min={minMortgageAmount}
                         onChange={handleChange}
@@ -68,7 +64,7 @@ const MortgageFormComponent = (props: MortgageFormProps) => {
                     <input
                         type="number"
                         name="interest"
-                        value={formState.interest}
+                        value={formState.interest.toString()}
                         max={maxInterest}
                         min={0}
                         step={0.01}
@@ -82,7 +78,7 @@ const MortgageFormComponent = (props: MortgageFormProps) => {
                     <input
                         type="number"
                         name="periodTotal"
-                        value={formState.periodTotal}
+                        value={formState.periodTotal.toString()}
                         max={maxTotalPeriod}
                         min={minTotalPeriod}
                         onChange={handleChange}
@@ -95,7 +91,7 @@ const MortgageFormComponent = (props: MortgageFormProps) => {
                     <input
                         type="number"
                         name="periodPaidOff"
-                        value={formState.periodPaidOff}
+                        value={formState.periodPaidOff.toString()}
                         max={formState.periodTotal - 3}
                         min={0}
                         onChange={handleChange}

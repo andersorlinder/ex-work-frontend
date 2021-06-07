@@ -1,4 +1,4 @@
-async function postRequest(apiURL: string, body: string) {
+async function postRequest(apiURL: string, body: string): Promise<number> {
     return await fetch(apiURL, {
         method: 'POST',
         mode: 'cors',

@@ -1,29 +1,23 @@
-interface ActionData {
-    type: InputType,
-    field: string,
-    payload: any,
-}
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
-export enum InputType {
-    TEXT = "text",
-    NUMBER = "number",
-    TOGGLE = "toggle",
-}
+import { InputAction, InputType } from "../models/InputModel";
 
-const formReducer = (state: any, action: ActionData) => {
-    if (action.type === InputType.NUMBER && isFinite(action.payload)) {
+const formReducer = (formState: any, inputAction: InputAction) => {
+    console.log(typeof inputAction.payload);
+    if (inputAction.type === InputType.NUMBER && isFinite(inputAction.payload)) {
         return {
-            ...state,
-            [action.field]: Number(action.payload),
+            ...formState,
+            [inputAction.field]: Number(inputAction.payload),
         };
     }
-    if (action.type === InputType.TEXT) {
+    if (inputAction.type === InputType.TEXT) {
         return {
-            ...state,
-            [action.field]: action.payload,
+            ...formState,
+            [inputAction.field]: inputAction.payload,
         };
     }
-    return state;
-}
+    return formState;
+};
 
 export default formReducer;

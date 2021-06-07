@@ -8,7 +8,7 @@ export enum StatusType {
     FAIL = "fail"
 }
 
-const StatusText = (props: StatusTextProps) => {
+const StatusText = (props: StatusTextProps): JSX.Element => {
     const { status, label } = props;
     return (
         <h4 className={status}>{label}</h4>

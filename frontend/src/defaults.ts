@@ -1,7 +1,12 @@
 import { ContactFormData } from "./models/applicationModels";
-import { MortgageData, MortgageFormData, MortgageOfferData } from "./models/mortgageModels";
+import {
+    MortgageData,
+    MortgageFormData,
+    MortgageOfferData,
+} from "./models/mortgageModels";
 
-export const mortgageApplicationApiUrl = "http://localhost:5000/MortgageApplication/submit"
+export const mortgageApplicationApiUrl =
+    "http://localhost:5000/MortgageApplication/submit";
 export const minMortgageAmount = 1000;
 export const maxMortgageAmount = 250000;
 export const minTotalPeriod = 6;
@@ -15,22 +20,22 @@ export const defaultMortgageFormData: MortgageFormData = {
     interest: 6.5,
     periodTotal: 60,
     periodPaidOff: 12,
-}
+};
 export const initialMortgageData: MortgageData = {
     mortgage: defaultMortgageFormData.mortgage,
     payment: defaultMortgageFormData.payment,
     interest: defaultMortgageFormData.interest,
-    periodRemaining: 
+    periodRemaining:
         defaultMortgageFormData.periodTotal -
         defaultMortgageFormData.periodPaidOff,
     submitted: false,
-}
+};
 export const mortgageOffer: MortgageOfferData = {
     mortgage: defaultMortgageFormData.mortgage,
     payment: defaultMortgageFormData.payment,
     interest: interestOffer,
     customerProfit: 1000,
-}
+};
 export const defaultContactFormData: ContactFormData = {
     name: "",
     address: "",
@@ -38,4 +43,4 @@ export const defaultContactFormData: ContactFormData = {
     city: "",
     phoneNumber: "",
     email: "",
-}
+};

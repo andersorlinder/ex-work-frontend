@@ -2,10 +2,11 @@ import { useReducer, useState } from "react";
 import MortgageFormComponent from "./components/mortgageForm";
 import MortgageOfferComponent from "./components/mortgageResult";
 import { defaultMortgageFormData, initialMortgageData } from "./defaults";
-import formReducer, { InputType } from "./reducers/formReducers";
+import { InputType } from "./models/InputModel";
+import formReducer from "./reducers/formReducers";
 
-function App() {
-    const [formState, dispatch] = useReducer(
+function App(): JSX.Element {
+    const [formState, setFormState] = useReducer(
         formReducer,
         defaultMortgageFormData
     );
@@ -14,7 +15,7 @@ function App() {
     const goToDefaultState = () => {
         submitMortgage(initialMortgageData);
         for (const [key, value] of Object.entries(defaultMortgageFormData)) {
-            dispatch({
+            setFormState({
                 type: InputType.NUMBER,
                 field: key,
                 payload: value,
@@ -31,7 +32,7 @@ function App() {
             <header className="App-header">Flytta annuitetslån</header>
             <MortgageFormComponent
                 formState={formState}
-                onChange={dispatch}
+                onChange={setFormState}
                 submitMortgage={submitMortgage}
                 resetForm={goToDefaultState}
             />

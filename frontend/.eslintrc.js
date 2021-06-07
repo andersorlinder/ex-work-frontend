@@ -19,9 +19,6 @@ module.exports = {
     },
     plugins: ["react", "@typescript-eslint"],
     rules: {
-        eqeqeq: "on",
-        indent: ["error", 4],
-        semi: [1, "always"],
         "react/react-in-jsx-scope": "off",
     },
 };
