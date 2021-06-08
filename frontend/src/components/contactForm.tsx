@@ -18,10 +18,10 @@ const ContactFormComponent = (props: ContactFormProps): JSX.Element => {
         formReducer,
         defaultContactFormData
     );
-    const [submittedResponse, setRespsons] = useState(0);
+    const [submittedResponse, setResponse] = useState(0);
     const [submitButtonDisabled, disableButton] = useState(false);
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setFormState({
             type: InputType.TEXT,
             field: event.target.name,
@@ -37,7 +37,7 @@ const ContactFormComponent = (props: ContactFormProps): JSX.Element => {
         };
         const body = JSON.stringify(applicationData);
         const respons = await postRequest(mortgageApplicationApiUrl, body);
-        setRespsons(respons);
+        setResponse(respons);
 
         if (respons === 200) {
             disableButton(true);
@@ -73,7 +73,7 @@ const ContactFormComponent = (props: ContactFormProps): JSX.Element => {
                         type="text"
                         name="name"
                         value={formState.name}
-                        onChange={handleChange}
+                        onChange={handleInputChange}
                         required
                     ></input>
                 </label>
@@ -83,7 +83,7 @@ const ContactFormComponent = (props: ContactFormProps): JSX.Element => {
                         type="text"
                         name="address"
                         value={formState.address}
-                        onChange={handleChange}
+                        onChange={handleInputChange}
                         required
                     ></input>
                 </label>
@@ -95,7 +95,7 @@ const ContactFormComponent = (props: ContactFormProps): JSX.Element => {
                         value={formState.zipCode || ""}
                         max={99999}
                         min={10000}
-                        onChange={handleChange}
+                        onChange={handleInputChange}
                         required
                     ></input>
                 </label>
@@ -105,7 +105,7 @@ const ContactFormComponent = (props: ContactFormProps): JSX.Element => {
                         type="text"
                         name="city"
                         value={formState.city}
-                        onChange={handleChange}
+                        onChange={handleInputChange}
                         required
                     ></input>
                 </label>
@@ -115,7 +115,7 @@ const ContactFormComponent = (props: ContactFormProps): JSX.Element => {
                         type="tel"
                         name="phoneNumber"
                         value={formState.phoneNumber || ""}
-                        onChange={handleChange}
+                        onChange={handleInputChange}
                         required
                     ></input>
                 </label>
@@ -125,7 +125,7 @@ const ContactFormComponent = (props: ContactFormProps): JSX.Element => {
                         type="email"
                         name="email"
                         value={formState.email}
-                        onChange={handleChange}
+                        onChange={handleInputChange}
                         required
                     ></input>
                 </label>
