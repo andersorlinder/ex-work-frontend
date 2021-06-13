@@ -7,8 +7,8 @@ import {
     minTotalPeriod,
 } from "../defaults";
 import { calculateMonthlyPayment } from "../functions/calculations";
-import { InputAction, InputType } from "../models/InputModel";
-import { MortgageData, MortgageFormData } from "../models/mortgageModels";
+import { InputAction, InputType } from "../models/input_models";
+import { MortgageData, MortgageFormData } from "../models/mortgage_models";
 
 interface MortgageFormProps {
     formState: MortgageFormData;

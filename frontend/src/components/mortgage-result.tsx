@@ -1,7 +1,7 @@
 import { getMortgageOffer } from "../functions/calculations";
-import { MortgageData } from "../models/mortgageModels";
-import ContactFormComponent from "./contactForm";
-import StatusText, { StatusType } from "./statusText";
+import { MortgageData } from "../models/mortgage_models";
+import ContactFormComponent from "./contact_form";
+import StatusText, { StatusType } from "./status_text";
 
 interface MortgageResultProps {
     mortgageData?: MortgageData;

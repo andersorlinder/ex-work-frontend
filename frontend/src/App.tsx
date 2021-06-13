@@ -1,9 +1,9 @@
 import { useReducer, useState } from "react";
-import MortgageFormComponent from "./components/mortgageForm";
-import MortgageOfferComponent from "./components/mortgageResult";
+import MortgageFormComponent from "./components/mortgage_form";
+import MortgageOfferComponent from "./components/mortgage-result";
 import { defaultMortgageFormData, initialMortgageData } from "./defaults";
-import { InputType } from "./models/InputModel";
-import formReducer from "./reducers/formReducers";
+import { InputType } from "./models/input_models";
+import formReducer from "./reducers/form_reducers";
 
 function App(): JSX.Element {
     const [formState, setFormState] = useReducer(

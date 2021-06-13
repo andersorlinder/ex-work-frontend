@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { useReducer } from "react";
 import { defaultContactFormData, mortgageApplicationApiUrl } from "../defaults";
-import { ApplicationData } from "../models/applicationModels";
-import { InputType } from "../models/InputModel";
-import { MortgageOfferData } from "../models/mortgageModels";
-import formReducer from "../reducers/formReducers";
-import postRequest from "../server/http_request";
-import StatusText, { StatusType } from "./statusText";
+import { ApplicationData } from "../models/application_models";
+import { InputType } from "../models/input_models";
+import { MortgageOfferData } from "../models/mortgage_models";
+import formReducer from "../reducers/form_reducers";
+import postRequest from "../server/http_requests";
+import StatusText, { StatusType } from "./status_text";
 
 interface ContactFormProps {
     givenOffer: MortgageOfferData;

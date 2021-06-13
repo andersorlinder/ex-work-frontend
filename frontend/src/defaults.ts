@@ -1,9 +1,9 @@
-import { ContactFormData } from "./models/applicationModels";
+import { ContactFormData } from "./models/application_models";
 import {
     MortgageData,
     MortgageFormData,
     MortgageOfferData,
-} from "./models/mortgageModels";
+} from "./models/mortgage_models";
 
 export const mortgageApplicationApiUrl =
     "http://localhost:5000/MortgageApplication/submit";

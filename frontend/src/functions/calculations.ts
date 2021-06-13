@@ -1,5 +1,5 @@
 import { interestOffer, profitThreshold } from "../defaults";
-import { MortgageData, MortgageOfferData } from "../models/mortgageModels";
+import { MortgageData, MortgageOfferData } from "../models/mortgage_models";
 
 export function getMortgageOffer(
     initialMortgageData: MortgageData
