@@ -9,3 +9,4 @@ updates:
     directory: "/frontend"
     schedule:
       interval: "quarterly"
+    rebase-strategy: "disabled"
