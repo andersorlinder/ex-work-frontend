@@ -1,7 +1,7 @@
 export interface InputAction {
 	type: InputType;
 	field: string;
-	payload: any;
+	payload: string | number;
 }
 
 export enum InputType {

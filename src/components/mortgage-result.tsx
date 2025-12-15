@@ -8,7 +8,7 @@ interface MortgageResultProps {
 	resetApplication: () => void;
 }
 
-const MortgageOfferComponent = (props: MortgageResultProps): JSX.Element | null => {
+const MortgageOfferComponent = (props: MortgageResultProps): React.ReactElement | null => {
 	const { mortgageData } = props;
 	if (!mortgageData) {
 		return null;
