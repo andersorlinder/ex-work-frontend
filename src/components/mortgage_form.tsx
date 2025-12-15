@@ -11,7 +11,7 @@ interface MortgageFormProps {
 	resetForm: () => void;
 }
 
-const MortgageFormComponent = (props: MortgageFormProps): JSX.Element => {
+const MortgageFormComponent = (props: MortgageFormProps): React.ReactElement => {
 	const { formState } = props;
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		props.onChange({

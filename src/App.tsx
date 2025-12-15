@@ -5,7 +5,7 @@ import { defaultMortgageFormData, initialMortgageData } from "./defaults";
 import { InputType } from "./models/input_models";
 import formReducer from "./reducers/form_reducers";
 
-function App(): JSX.Element {
+const App = (): React.ReactElement => {
 	const [formState, setFormState] = useReducer(formReducer, defaultMortgageFormData);
 	const [mortgageData, submitMortgage] = useState(initialMortgageData);
 
@@ -38,6 +38,6 @@ function App(): JSX.Element {
 			)}
 		</div>
 	);
-}
+};
 
 export default App;

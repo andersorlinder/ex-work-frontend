@@ -1,6 +1,5 @@
 import type React from "react";
-import { useState } from "react";
-import { useReducer } from "react";
+import { useReducer, useState } from "react";
 import { defaultContactFormData, mortgageApplicationApiUrl } from "../defaults";
 import type { ApplicationData } from "../models/application_models";
 import { InputType } from "../models/input_models";
@@ -14,7 +13,7 @@ interface ContactFormProps {
 	onSubmit: () => void;
 }
 
-const ContactFormComponent = (props: ContactFormProps): JSX.Element => {
+const ContactFormComponent = (props: ContactFormProps): React.ReactElement => {
 	const [formState, setFormState] = useReducer(formReducer, defaultContactFormData);
 	const [submittedResponse, setResponse] = useState(0);
 	const [submitButtonDisabled, disableButton] = useState(false);
