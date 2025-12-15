@@ -1,75 +1,65 @@
 import { interestOffer, profitThreshold } from "../defaults";
-import { MortgageData, MortgageOfferData } from "../models/mortgage_models";
+import type { MortgageData, MortgageOfferData } from "../models/mortgage_models";
 
-export function getMortgageOffer(
-    initialMortgageData: MortgageData
-): MortgageOfferData {
-    const remainingMortgageAmount =
-        calculateRemainingMortgage(initialMortgageData);
-    if (initialMortgageData.interest <= interestOffer) {
-        return { mortgage: remainingMortgageAmount };
-    }
+export function getMortgageOffer(initialMortgageData: MortgageData): MortgageOfferData {
+	const remainingMortgageAmount = calculateRemainingMortgage(initialMortgageData);
+	if (initialMortgageData.interest <= interestOffer) {
+		return { mortgage: remainingMortgageAmount };
+	}
 
-    const newMortgageData: MortgageData = {
-        ...initialMortgageData,
-        mortgage: remainingMortgageAmount,
-        interest: interestOffer,
-    };
-    newMortgageData.payment = calculateMonthlyPayment(newMortgageData);
+	const newMortgageData: MortgageData = {
+		...initialMortgageData,
+		mortgage: remainingMortgageAmount,
+		interest: interestOffer,
+	};
+	newMortgageData.payment = calculateMonthlyPayment(newMortgageData);
 
-    const profits = calculateProfits(
-        newMortgageData,
-        initialMortgageData.payment
-    );
+	const profits = calculateProfits(newMortgageData, initialMortgageData.payment);
 
-    if (profits.bankProfit < profitThreshold) {
-        return { mortgage: remainingMortgageAmount };
-    }
+	if (profits.bankProfit < profitThreshold) {
+		return { mortgage: remainingMortgageAmount };
+	}
 
-    const mortgageOffer: MortgageOfferData = {
-        mortgage: newMortgageData.mortgage,
-        payment: newMortgageData.payment,
-        interest: newMortgageData.interest,
-        customerProfit: profits.customerProfit,
-        bankProfit: profits.bankProfit,
-    };
+	const mortgageOffer: MortgageOfferData = {
+		mortgage: newMortgageData.mortgage,
+		payment: newMortgageData.payment,
+		interest: newMortgageData.interest,
+		customerProfit: profits.customerProfit,
+		bankProfit: profits.bankProfit,
+	};
 
-    return mortgageOffer;
+	return mortgageOffer;
 }
 
 function calculateRemainingMortgage(mortgageData: MortgageData): number {
-    const { payment, interest, periodRemaining } = mortgageData;
-    const normalizedMonthlyInterest = interest / 12 / 100;
-    const changeFactor = 1 + normalizedMonthlyInterest;
+	const { payment, interest, periodRemaining } = mortgageData;
+	const normalizedMonthlyInterest = interest / 12 / 100;
+	const changeFactor = 1 + normalizedMonthlyInterest;
 
-    const remainingMortgage = Math.round(
-        (payment * (1 - Math.pow(changeFactor, periodRemaining * -1))) /
-            normalizedMonthlyInterest
-    );
-    return remainingMortgage;
+	const remainingMortgage = Math.round(
+		(payment * (1 - changeFactor ** (periodRemaining * -1))) / normalizedMonthlyInterest,
+	);
+	return remainingMortgage;
 }
 
 export function calculateMonthlyPayment(mortgageData: MortgageData): number {
-    const { mortgage, interest, periodRemaining } = mortgageData;
-    const normalizedMonthlyInterest = interest / 12 / 100;
-    const changeFactor = 1 + normalizedMonthlyInterest;
+	const { mortgage, interest, periodRemaining } = mortgageData;
+	const normalizedMonthlyInterest = interest / 12 / 100;
+	const changeFactor = 1 + normalizedMonthlyInterest;
 
-    const payment = Math.round(
-        (mortgage * normalizedMonthlyInterest) /
-            (1 - Math.pow(changeFactor, periodRemaining * -1))
-    );
+	const payment = Math.round((mortgage * normalizedMonthlyInterest) / (1 - changeFactor ** (periodRemaining * -1)));
 
-    return payment;
+	return payment;
 }
 
 function calculateProfits(
-    newMortgageData: MortgageData,
-    oldPayment: number
+	newMortgageData: MortgageData,
+	oldPayment: number,
 ): { bankProfit: number; customerProfit: number } {
-    const { mortgage, payment, periodRemaining } = newMortgageData;
+	const { mortgage, payment, periodRemaining } = newMortgageData;
 
-    const bankProfit = periodRemaining * payment - mortgage;
-    const customerProfit = periodRemaining * (oldPayment - payment);
+	const bankProfit = periodRemaining * payment - mortgage;
+	const customerProfit = periodRemaining * (oldPayment - payment);
 
-    return { bankProfit, customerProfit };
+	return { bankProfit, customerProfit };
 }
