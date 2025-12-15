@@ -16,6 +16,4 @@ You will also see any lint errors in the console.
 
 ### `npm build`
 
-### `npm test`
-
-### `npm eject`
+### `npm preview`
